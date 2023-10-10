@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Países</title>
+    <!-- Enlace a Bootstrap (asegúrate de tener la versión 4.0.0 o la que desees) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Registro de Países</h1>
+        <form id="registro-form" action="procesar.php" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre del País:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="extension">Extensión:</label>
+                <input type="text" class="form-control" id="extension" name="extension" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+        <div id="mensaje" class="mt-4 alert alert-primary">Mensaje de respuesta</div>
+    </div>
+
+    <!-- Enlace a Bootstrap JavaScript (debe estar después de jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#registro-form').submit(function(e) {
+                e.preventDefault();
+
+                var nombre = $('#nombre').val();
+                var extension = $('#extension').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'procesar.php',
+                    data: { nombre: nombre, extension: extension },
+                    success: function(response) {
+                        $('#mensaje').html(response);
+                        $('#nombre').val('');
+                        $('#extension').val('');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
